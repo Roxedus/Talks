@@ -13,7 +13,7 @@ default:
   just --list
 
 static path:
-  {{replace(_cmd,"|path|", path)}} /slides/index.md --css custom.css --static _site --static-dirs=assets
+  {{replace(_base,"|path|", path)}} --user $(id -u):$(id -g) {{_image}} /slides/index.md --css custom.css --static _site --static-dirs=assets
 
 dev path *args:
   {{replace(_serve,"|path|", path)}} /slides --watch --css custom.css
