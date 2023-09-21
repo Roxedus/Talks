@@ -1,0 +1,26 @@
+#!/usr/bin/env -S just --justfile
+
+default:
+  just --list
+
+build:
+  docker build -t ghcr.io/norsk-programmering/website .
+
+run:
+  docker run --rm -p 8080:80 ghcr.io/norsk-programmering/website
+
+_vhs_extend:
+  docker build -t vhs -f vhs/Dockerfile.vhs vhs/
+
+_build_vhs:
+  docker image rm ghcr.io/norsk-programmering/website:latest || true
+  docker pull nginx:1.24
+  docker run --rm -e DOCKER_BUILDKIT=1 -v /var/run/docker.sock:/var/run/docker.sock -v {{invocation_directory()}}:/vhs vhs vhs/build.tape
+
+_docker_login:
+  docker run --rm -v {{invocation_directory()}}/.docker/:/root/.docker/ -v /var/run/docker.sock:/var/run/docker.sock --entrypoint docker vhs login ghcr.io -u roxedus -p <FILLME>
+
+_push_vhs:
+  docker run --rm -v {{invocation_directory()}}/.docker/:/root/.docker/:ro -v /var/run/docker.sock:/var/run/docker.sock -v {{invocation_directory()}}:/vhs vhs vhs/push.tape
+
+vhs: _build_vhs _push_vhs
