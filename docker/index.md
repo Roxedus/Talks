@@ -28,7 +28,7 @@ En lite teknisk gjennomgang av en teknikker
 
 ----
 
-# Linuxserver
+# Linuxserver.io
 
 - 19 Milliarder
 - 2016
@@ -51,7 +51,7 @@ Note:
 # Hva er det til
 
 - Isolering av applikasjoner
-    - Prosesser, minne, nettverk
+    - Prosesser, lagring, nettverk
     - Reproduserbarhet
 - Kan være kode <!-- .element: class="fragment" data-fragment-index="1" -->
 - Verktøykasse <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -60,7 +60,7 @@ Note:
 - Hovedformål
     - Isolerer prosesser som standard
         - Nettverk er ikke helt isolert som standard
-            - Docker compose custom network
+            - Port inn er sperret
         - Applikasjoner er isolert fordi lagring og prosesser er
         - Kan dele andre ressurser ved behov
     - Kan reprodusere miljø på OS og pakke nivå
